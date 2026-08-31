@@ -1,0 +1,4 @@
+/* Left half debug: test OLED at 0x3d instead of 0x3c */
+&oled {
+	reg = <0x3d>;
+};

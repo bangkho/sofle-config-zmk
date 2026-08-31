@@ -1,0 +1,4 @@
+name: sofle-debug-left
+append:
+  EXTRA_CONF_FILE: sofle-debug-left.conf
+  EXTRA_DTC_OVERLAY_FILE: sofle-debug-left.overlay
