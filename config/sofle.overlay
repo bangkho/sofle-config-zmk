@@ -1,0 +1,21 @@
+/*
+ * Flash layout for the nosd Adafruit nice!nano bootloader.
+ *
+ * The nice_nano ships with the S140 SoftDevice, so ZMK's stock layout puts the
+ * app at 0x26000 (0x1000-0x25FFF is the SoftDevice). The bootloader on our
+ * boards reports "SoftDevice: not found" (nosd build), which shifts the app
+ * window down to MBR_SIZE = 0x1000 — everything flashed at 0x26000 is present
+ * but never jumped to, and the board stays in the UF2 bootloader.
+ *
+ * Only the app window moves. Storage (0xEC000) and the bootloader
+ * (0xF4000) keep their stock offsets, and the bootloader accepts UF2 writes
+ * only below 0xEA000 (BOOTLOADER_REGION_START - DFU_APP_DATA_RESERVED), so the
+ * app has to stay under 0xEC000.
+ */
+&sd_partition {
+	reg = <0x00000000 0x00001000>;
+};
+
+&code_partition {
+	reg = <0x00001000 0x000EB000>; /* 0x1000 - 0xEBFFF, ~940 KiB */
+};
